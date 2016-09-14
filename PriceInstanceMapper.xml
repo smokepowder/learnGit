@@ -1,0 +1,609 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bizconf.bss.priceInstance.dao.PriceInstanceMapper" >
+  <resultMap id="BaseResultMap" type="com.bizconf.bss.priceInstance.vo.PriceInstance" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="Price_Inst_ID" property="priceInstId" jdbcType="VARCHAR" />
+    <result column="Price_Name" property="priceName" jdbcType="VARCHAR" />
+    <result column="Entity_Type_ID" property="entityTypeId" jdbcType="INTEGER" />
+    <result column="Price_ID" property="priceId" jdbcType="VARCHAR" />
+    <result column="Entity_ID" property="entityId" jdbcType="VARCHAR" />
+    <result column="Auto_Cfg_Child_Price" property="autoCfgChildPrice" jdbcType="CHAR" />
+    <result column="Effect_Datetime" property="effectDatetime" jdbcType="TIMESTAMP" />
+    <result column="Expire_Datetime" property="expireDatetime" jdbcType="TIMESTAMP" />
+    <result column="Create_User_ID" property="createUserId" jdbcType="INTEGER" />
+    <result column="Create_Datetime" property="createDatetime" jdbcType="TIMESTAMP" />
+    <result column="Modify_User_ID" property="modifyUserId" jdbcType="INTEGER" />
+    <result column="Modify_Datetime" property="modifyDatetime" jdbcType="TIMESTAMP" />
+    <result column="SPARE_INT1" property="spareInt1" jdbcType="INTEGER" />
+    <result column="SPARE_INT2" property="spareInt2" jdbcType="INTEGER" />
+    <result column="SPARE_STR1" property="spareStr1" jdbcType="VARCHAR" />
+    <result column="SPARE_STR2" property="spareStr2" jdbcType="VARCHAR" />
+    <association property="entityType" column="Entity_Type_ID" select="com.bizconf.bss.weft.entityType.dao.RefEntityTypeMapper.selectByEntityTypeId"></association>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, Price_Inst_ID, Price_Name, Entity_Type_ID, Price_ID, Entity_ID, Auto_Cfg_Child_Price, 
+    Effect_Datetime, Expire_Datetime, Create_User_ID, Create_Datetime, Modify_User_ID, 
+    Modify_Datetime, SPARE_INT1, SPARE_INT2, SPARE_STR1, SPARE_STR2
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.bizconf.bss.priceInstance.vo.PriceInstanceExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from Price_Instance
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from Price_Instance
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from Price_Instance
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.bizconf.bss.priceInstance.vo.PriceInstanceExample" >
+    delete from Price_Instance
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.bizconf.bss.priceInstance.vo.PriceInstance" >
+    insert into Price_Instance (ID, Price_Inst_ID, Price_Name, 
+      Entity_Type_ID, Price_ID, Entity_ID, 
+      Auto_Cfg_Child_Price, Effect_Datetime, Expire_Datetime, 
+      Create_User_ID, Create_Datetime, Modify_User_ID, 
+      Modify_Datetime, SPARE_INT1, SPARE_INT2, 
+      SPARE_STR1, SPARE_STR2)
+    values (#{id,jdbcType=INTEGER}, #{priceInstId,jdbcType=VARCHAR}, #{priceName,jdbcType=VARCHAR}, 
+      #{entityTypeId,jdbcType=INTEGER}, #{priceId,jdbcType=VARCHAR}, #{entityId,jdbcType=VARCHAR}, 
+      #{autoCfgChildPrice,jdbcType=CHAR}, #{effectDatetime,jdbcType=TIMESTAMP}, #{expireDatetime,jdbcType=TIMESTAMP}, 
+      #{createUserId,jdbcType=INTEGER}, #{createDatetime,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=INTEGER}, 
+      #{modifyDatetime,jdbcType=TIMESTAMP}, #{spareInt1,jdbcType=INTEGER}, #{spareInt2,jdbcType=INTEGER}, 
+      #{spareStr1,jdbcType=VARCHAR}, #{spareStr2,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertbatch" parameterType="java.util.List">  
+        insert into Price_Instance (ID, Price_Inst_ID, Price_Name, 
+	      Entity_Type_ID, Price_ID, Entity_ID, 
+	      Auto_Cfg_Child_Price, Effect_Datetime, Expire_Datetime, 
+	      Create_User_ID, Create_Datetime, Modify_User_ID, 
+	      Modify_Datetime, SPARE_INT1, SPARE_INT2, 
+	      SPARE_STR1, SPARE_STR2
+	    ) values  
+    <foreach collection="list" item="item" index="index" separator=",">  
+       (  #{item.id,jdbcType=INTEGER}, 
+          #{item.priceInstId,jdbcType=VARCHAR}, 
+          #{item.priceName,jdbcType=VARCHAR}, 
+	      #{item.entityTypeId,jdbcType=INTEGER}, 
+	      #{item.priceId,jdbcType=VARCHAR}, 
+	      #{item.entityId,jdbcType=VARCHAR}, 
+	      #{item.autoCfgChildPrice,jdbcType=CHAR}, 
+	      #{item.effectDatetime,jdbcType=TIMESTAMP}, 
+	      #{item.expireDatetime,jdbcType=TIMESTAMP}, 
+	      #{item.createUserId,jdbcType=INTEGER},
+	      #{item.createDatetime,jdbcType=TIMESTAMP}, 
+	      #{item.modifyUserId,jdbcType=INTEGER}, 
+	      #{item.modifyDatetime,jdbcType=TIMESTAMP}, 
+	      #{item.spareInt1,jdbcType=INTEGER}, 
+	      #{item.spareInt2,jdbcType=INTEGER}, 
+	      #{item.spareStr1,jdbcType=VARCHAR}, 
+	      #{item.spareStr2,jdbcType=VARCHAR}
+	    ) 
+    </foreach>  
+  </insert>
+  <insert id="insertSelective" parameterType="com.bizconf.bss.priceInstance.vo.PriceInstance" >
+    insert into Price_Instance
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="priceInstId != null" >
+        Price_Inst_ID,
+      </if>
+      <if test="priceName != null" >
+        Price_Name,
+      </if>
+      <if test="entityTypeId != null" >
+        Entity_Type_ID,
+      </if>
+      <if test="priceId != null" >
+        Price_ID,
+      </if>
+      <if test="entityId != null" >
+        Entity_ID,
+      </if>
+      <if test="autoCfgChildPrice != null" >
+        Auto_Cfg_Child_Price,
+      </if>
+      <if test="effectDatetime != null" >
+        Effect_Datetime,
+      </if>
+      <if test="expireDatetime != null" >
+        Expire_Datetime,
+      </if>
+      <if test="createUserId != null" >
+        Create_User_ID,
+      </if>
+      <if test="createDatetime != null" >
+        Create_Datetime,
+      </if>
+      <if test="modifyUserId != null" >
+        Modify_User_ID,
+      </if>
+      <if test="modifyDatetime != null" >
+        Modify_Datetime,
+      </if>
+      <if test="spareInt1 != null" >
+        SPARE_INT1,
+      </if>
+      <if test="spareInt2 != null" >
+        SPARE_INT2,
+      </if>
+      <if test="spareStr1 != null" >
+        SPARE_STR1,
+      </if>
+      <if test="spareStr2 != null" >
+        SPARE_STR2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="priceInstId != null" >
+        #{priceInstId,jdbcType=VARCHAR},
+      </if>
+      <if test="priceName != null" >
+        #{priceName,jdbcType=VARCHAR},
+      </if>
+      <if test="entityTypeId != null" >
+        #{entityTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="priceId != null" >
+        #{priceId,jdbcType=VARCHAR},
+      </if>
+      <if test="entityId != null" >
+        #{entityId,jdbcType=VARCHAR},
+      </if>
+      <if test="autoCfgChildPrice != null" >
+        #{autoCfgChildPrice,jdbcType=CHAR},
+      </if>
+      <if test="effectDatetime != null" >
+        #{effectDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expireDatetime != null" >
+        #{expireDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createDatetime != null" >
+        #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyUserId != null" >
+        #{modifyUserId,jdbcType=INTEGER},
+      </if>
+      <if test="modifyDatetime != null" >
+        #{modifyDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="spareInt1 != null" >
+        #{spareInt1,jdbcType=INTEGER},
+      </if>
+      <if test="spareInt2 != null" >
+        #{spareInt2,jdbcType=INTEGER},
+      </if>
+      <if test="spareStr1 != null" >
+        #{spareStr1,jdbcType=VARCHAR},
+      </if>
+      <if test="spareStr2 != null" >
+        #{spareStr2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.bizconf.bss.priceInstance.vo.PriceInstanceExample" resultType="java.lang.Integer" >
+    select count(*) from Price_Instance
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update Price_Instance
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.priceInstId != null" >
+        Price_Inst_ID = #{record.priceInstId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.priceName != null" >
+        Price_Name = #{record.priceName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.entityTypeId != null" >
+        Entity_Type_ID = #{record.entityTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.priceId != null" >
+        Price_ID = #{record.priceId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.entityId != null" >
+        Entity_ID = #{record.entityId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.autoCfgChildPrice != null" >
+        Auto_Cfg_Child_Price = #{record.autoCfgChildPrice,jdbcType=CHAR},
+      </if>
+      <if test="record.effectDatetime != null" >
+        Effect_Datetime = #{record.effectDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expireDatetime != null" >
+        Expire_Datetime = #{record.expireDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createUserId != null" >
+        Create_User_ID = #{record.createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="record.createDatetime != null" >
+        Create_Datetime = #{record.createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifyUserId != null" >
+        Modify_User_ID = #{record.modifyUserId,jdbcType=INTEGER},
+      </if>
+      <if test="record.modifyDatetime != null" >
+        Modify_Datetime = #{record.modifyDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.spareInt1 != null" >
+        SPARE_INT1 = #{record.spareInt1,jdbcType=INTEGER},
+      </if>
+      <if test="record.spareInt2 != null" >
+        SPARE_INT2 = #{record.spareInt2,jdbcType=INTEGER},
+      </if>
+      <if test="record.spareStr1 != null" >
+        SPARE_STR1 = #{record.spareStr1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spareStr2 != null" >
+        SPARE_STR2 = #{record.spareStr2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update Price_Instance
+    set ID = #{record.id,jdbcType=INTEGER},
+      Price_Inst_ID = #{record.priceInstId,jdbcType=VARCHAR},
+      Price_Name = #{record.priceName,jdbcType=VARCHAR},
+      Entity_Type_ID = #{record.entityTypeId,jdbcType=INTEGER},
+      Price_ID = #{record.priceId,jdbcType=VARCHAR},
+      Entity_ID = #{record.entityId,jdbcType=VARCHAR},
+      Auto_Cfg_Child_Price = #{record.autoCfgChildPrice,jdbcType=CHAR},
+      Effect_Datetime = #{record.effectDatetime,jdbcType=TIMESTAMP},
+      Expire_Datetime = #{record.expireDatetime,jdbcType=TIMESTAMP},
+      Create_User_ID = #{record.createUserId,jdbcType=INTEGER},
+      Create_Datetime = #{record.createDatetime,jdbcType=TIMESTAMP},
+      Modify_User_ID = #{record.modifyUserId,jdbcType=INTEGER},
+      Modify_Datetime = #{record.modifyDatetime,jdbcType=TIMESTAMP},
+      SPARE_INT1 = #{record.spareInt1,jdbcType=INTEGER},
+      SPARE_INT2 = #{record.spareInt2,jdbcType=INTEGER},
+      SPARE_STR1 = #{record.spareStr1,jdbcType=VARCHAR},
+      SPARE_STR2 = #{record.spareStr2,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bizconf.bss.priceInstance.vo.PriceInstance" >
+    update Price_Instance
+    <set >
+      <if test="priceInstId != null" >
+        Price_Inst_ID = #{priceInstId,jdbcType=VARCHAR},
+      </if>
+      <if test="priceName != null" >
+        Price_Name = #{priceName,jdbcType=VARCHAR},
+      </if>
+      <if test="entityTypeId != null" >
+        Entity_Type_ID = #{entityTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="priceId != null" >
+        Price_ID = #{priceId,jdbcType=VARCHAR},
+      </if>
+      <if test="entityId != null" >
+        Entity_ID = #{entityId,jdbcType=VARCHAR},
+      </if>
+      <if test="autoCfgChildPrice != null" >
+        Auto_Cfg_Child_Price = #{autoCfgChildPrice,jdbcType=CHAR},
+      </if>
+      <if test="effectDatetime != null" >
+        Effect_Datetime = #{effectDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expireDatetime != null" >
+        Expire_Datetime = #{expireDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null" >
+        Create_User_ID = #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createDatetime != null" >
+        Create_Datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyUserId != null" >
+        Modify_User_ID = #{modifyUserId,jdbcType=INTEGER},
+      </if>
+      <if test="modifyDatetime != null" >
+        Modify_Datetime = #{modifyDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="spareInt1 != null" >
+        SPARE_INT1 = #{spareInt1,jdbcType=INTEGER},
+      </if>
+      <if test="spareInt2 != null" >
+        SPARE_INT2 = #{spareInt2,jdbcType=INTEGER},
+      </if>
+      <if test="spareStr1 != null" >
+        SPARE_STR1 = #{spareStr1,jdbcType=VARCHAR},
+      </if>
+      <if test="spareStr2 != null" >
+        SPARE_STR2 = #{spareStr2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bizconf.bss.priceInstance.vo.PriceInstance" >
+    update Price_Instance
+    set Price_Inst_ID = #{priceInstId,jdbcType=VARCHAR},
+      Price_Name = #{priceName,jdbcType=VARCHAR},
+      Entity_Type_ID = #{entityTypeId,jdbcType=INTEGER},
+      Price_ID = #{priceId,jdbcType=VARCHAR},
+      Entity_ID = #{entityId,jdbcType=VARCHAR},
+      Auto_Cfg_Child_Price = #{autoCfgChildPrice,jdbcType=CHAR},
+      Effect_Datetime = #{effectDatetime,jdbcType=TIMESTAMP},
+      Expire_Datetime = #{expireDatetime,jdbcType=TIMESTAMP},
+      Create_User_ID = #{createUserId,jdbcType=INTEGER},
+      Create_Datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      Modify_User_ID = #{modifyUserId,jdbcType=INTEGER},
+      Modify_Datetime = #{modifyDatetime,jdbcType=TIMESTAMP},
+      SPARE_INT1 = #{spareInt1,jdbcType=INTEGER},
+      SPARE_INT2 = #{spareInt2,jdbcType=INTEGER},
+      SPARE_STR1 = #{spareStr1,jdbcType=VARCHAR},
+      SPARE_STR2 = #{spareStr2,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  
+ <select id="countByParameter" resultType="java.util.Map" parameterType="map">
+       
+   select count(*) as count, Price.Price_Type_ID as priceTypeId from Price_Instance LEFT join Price on 
+         Price_Instance.Price_ID = Price.Price_ID
+                where 1=1
+                 <if test="parameter.entityId != null" >
+		                AND  Price_Instance.Entity_ID = #{parameter.entityId,jdbcType=VARCHAR}
+		           </if>
+		             <if test="parameter.entityTypeId != null" >
+		                  AND  Price_Instance.Entity_Type_ID = #{parameter.entityTypeId,jdbcType=INTEGER}
+		                </if>
+		                     <if test="parameter.priceId != null" >
+		                        AND  Price.Price_Type_ID =(
+                                     select Price_Type_ID from Price where Price_ID =  #{parameter.priceId,jdbcType=VARCHAR}
+                                ) 
+		                       </if>
+                          
+  </select>
+  <select id="rcCountByParameter" resultType="java.lang.Integer" parameterType="map">
+       
+   select count(*) as count from Price_Instance LEFT join Price on 
+         Price_Instance.Price_ID = Price.Price_ID
+                where 1=1
+                 <if test="parameter.entityId != null" >
+		                AND  Price_Instance.Entity_ID = #{parameter.entityId,jdbcType=VARCHAR}
+		           </if>
+		             <if test="parameter.entityTypeId != null" >
+		                  AND  Price_Instance.Entity_Type_ID = #{parameter.entityTypeId,jdbcType=INTEGER}
+		                </if>
+		                     <if test="parameter.priceId != null" >
+		                        AND  Price.Price_ID = #{parameter.priceId,jdbcType=VARCHAR}
+		                       </if>
+                          
+  </select> 
+  
+  <!-- new price instance export -->
+   <select id="exportPriceInstance" resultType="java.util.Map" parameterType="map">
+       
+  		 (SELECT 
+			  Entity_ID,
+			 ret.Entity_Type_Name Entity_Type, 
+			  pi.Price_Name,
+			  rmt.Meeting_Product_Type AS Product_Type,			 
+			  REPLACE(pbc.Billing_Component,'Shrine','BizConf') as Destination,
+			 'Service Fee' Fee_Type, 
+			  sf.Price,
+			  sf.Price_ID,
+			  IF(p.Price_Unit='m','Minute',p.Price_Unit) Price_Unit,
+			  'Standard' as price_type_list,
+			  DATE_FORMAT(sf.Create_Datetime,'%Y/%c/%d %H:%i') Create_Datetime,
+			  DATE_FORMAT(sf.Modify_Datetime,'%Y/%c/%d %H:%i') Modify_Datetime , 
+			  sf.Service_Fee_ID  SID
+			  FROM 	Price_Instance  pi,
+			       Price p,
+			       Service_Fee sf,
+			       Ref_Entity_Type ret,
+			       Ref_Meeting_Product_Type rmt,
+			       BillComp_Price  bp,
+			       Product_Billing_Component pbc
+			 where pi.Entity_ID = #{parameter.entityId,jdbcType=VARCHAR}
+			   AND p.Price_ID = pi.Price_ID
+			   and sf.Price_ID = p.Price_ID
+			   and pi.Entity_Type_ID = ret.Entity_Type_ID
+			   and rmt.Meeting_Product_Type_ID = p.Product_Type_ID
+			   and sf.Billing_Component =bp.Billing_Component 
+			   AND sf.Billing_Component=pbc.Billing_Component_ID
+			   and  bp.Product_Type_ID=p.Product_Type_ID
+			   AND NOT EXISTS(select * from Service_Fee_Change_His sfh  where sf.Service_Fee_ID=sfh.Service_Fee_ID) 
+			)
+			
+			UNION
+			
+			 (SELECT 
+			  Entity_ID,
+			 ret.Entity_Type_Name Entity_Type, 
+			  pi.Price_Name,
+			  rmt.Meeting_Product_Type AS Product_Type,			  
+			  REPLACE(pbc.Billing_Component,'Shrine','BizConf') as Destination,
+			 'Service Fee' Fee_Type, 
+			  sf.Price,
+			  sf.Price_ID,
+			  IF(p.Price_Unit='m','Minute',p.Price_Unit) Price_Unit,
+			  IF(sf.Price=sfh.Price,'Standard','Special') as price_type_list,
+			  DATE_FORMAT(sf.Create_Datetime,'%Y/%c/%d %H:%i') Create_Datetime,
+			  DATE_FORMAT(sf.Modify_Datetime,'%Y/%c/%d %H:%i') Modify_Datetime , 
+			  sf.Service_Fee_ID  SID
+			  FROM Price_Instance  pi,
+			       Price p,
+			       Service_Fee sf,
+			       Ref_Entity_Type ret,
+			       Ref_Meeting_Product_Type rmt,
+			       BillComp_Price  bp,
+			       Product_Billing_Component pbc,
+			       Service_Fee_Change_His  sfh
+			 where pi.Entity_ID = #{parameter.entityId,jdbcType=VARCHAR}
+			   AND p.Price_ID = pi.Price_ID
+			   and sf.Price_ID = p.Price_ID
+			   and pi.Entity_Type_ID = ret.Entity_Type_ID
+			   and rmt.Meeting_Product_Type_ID = p.Product_Type_ID
+			   and sf.Billing_Component =bp.Billing_Component 
+			   AND sf.Billing_Component=pbc.Billing_Component_ID
+			   and  bp.Product_Type_ID=p.Product_Type_ID			  
+			   and  sf.Service_Fee_ID=sfh.Service_Fee_ID
+			   and sfh.Modify_Datetime is NULL
+			   AND  EXISTS(select * from Service_Fee_Change_His sfh2 where sf.Service_Fee_ID=sfh2.Service_Fee_ID) 
+			)			
+			
+			UNION
+			(
+				SELECT 
+			Entity_ID,
+			ret.Entity_Type_Name Entity_Type,
+			 pi.Price_Name,
+			 rmpt.Meeting_Product_Type as Product_Type,
+			 REPLACE(sf.Features,'Shrine','BizConf') Destination,
+			 'Surcharge Fee' Fee_Type,
+			  sf.Price Price,
+			  sf.Price_ID, 
+			  IF(p.Price_Unit='m','Minute',p.Price_Unit) Price_Unit,
+			  'Standard' as price_type_list,
+			  DATE_FORMAT(sf.Create_Datetime,'%Y/%c/%d %H:%i') Create_Datetime,
+			  DATE_FORMAT(sf.Modify_Datetime,'%Y/%c/%d %H:%i') Modify_Datetime  ,
+			  sf.Surcharge_ID sid
+			  FROM Price_Instance  pi,
+			       Surcharge_Fee sf,
+			       Price p,
+			       Access_Number_Price ap,
+			       Ref_Entity_Type ret,
+			       Ref_Meeting_Product_Type rmpt
+			 WHERE     Entity_ID = #{parameter.entityId,jdbcType=VARCHAR}
+			       AND pi.Price_ID = sf.Price_ID
+			       AND p.Price_ID = pi.Price_ID
+			       AND p.Product_Type_ID = ap.Product_Type_ID
+			       AND ap.Feature = sf.Features
+			       AND ret.Entity_Type_ID = pi.Entity_Type_ID
+			       AND ap.Product_Type_ID=rmpt.Meeting_Product_Type_ID
+			       AND sf.Features!='Shrine Playback CN'
+				   AND  not EXISTS(select * from Surcharge_Fee_Change_His scfe where sf.Surcharge_ID=scfe.Surcharge_ID) 
+			)
+			
+			UNION
+			(
+				SELECT 
+					Entity_ID,
+					ret.Entity_Type_Name Entity_Type,
+			 		pi.Price_Name,
+			 		rmpt.Meeting_Product_Type as Product_Type,
+				   REPLACE(sf.Features,'Shrine','BizConf') Destination,
+			        'Surcharge Fee' Fee_Type,
+				  sf.Price Price,
+				  sf.Price_ID, 
+				  IF(p.Price_Unit='m','Minute',p.Price_Unit) Price_Unit,
+				   IF(sf.Price=scfe.Price,'Standard','Special') as price_type_list,
+				  DATE_FORMAT(sf.Create_Datetime,'%Y/%c/%d %H:%i') Create_Datetime,
+				  DATE_FORMAT(sf.Modify_Datetime,'%Y/%c/%d %H:%i') Modify_Datetime  ,
+				  sf.Surcharge_ID sid
+				  FROM Price_Instance  pi,
+				       Surcharge_Fee sf,
+				       Price p,
+				       Access_Number_Price ap,
+				       Ref_Entity_Type ret,
+				       Ref_Meeting_Product_Type rmpt,
+				       Surcharge_Fee_Change_His scfe
+				 WHERE     Entity_ID = #{parameter.entityId,jdbcType=VARCHAR}
+				       AND pi.Price_ID = sf.Price_ID
+				       AND p.Price_ID = pi.Price_ID
+				       AND p.Product_Type_ID = ap.Product_Type_ID
+				       AND ap.Feature = sf.Features
+				       AND ret.Entity_Type_ID = pi.Entity_Type_ID
+				       AND ap.Product_Type_ID=rmpt.Meeting_Product_Type_ID
+				       AND sf.Features!='Shrine Playback CN'
+					   AND  sf.Surcharge_ID=scfe.Surcharge_ID
+					   AND scfe.Modify_Datetime is NULL
+					   AND   EXISTS(select * from Surcharge_Fee_Change_His scfe2 where sf.Surcharge_ID=scfe2.Surcharge_ID)
+			)
+			                          
+  </select> 
+</mapper>
